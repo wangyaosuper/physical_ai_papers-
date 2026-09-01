@@ -1,0 +1,102 @@
+
+Flex-π: A Multi-Stream World-Action Model with Compute Flexibility
+Paper ID:2608.10860
+作者:Ge Yan, Jinghao Liu, Yuzhi Fan, Lei Cai, Minwen Liao 等 7 人
+发布日期:2026-08-11T12:33:51.000Z
+算法方案：
+共享潜在空间与多流（Multi-Stream）输入：Flex-π 将RGB图像、3D点云图和DINO语义特征分别编码，形成三个独立的令牌流（token streams），并将它们投射到同一个共享的潜在空间中。
+混合专家（Mixture-of-Transformers）骨干网络：这三个数据流与动作信号一起，被送入一个混合专家（MoE）Transformer骨干网络中进行联合去噪。这种联合训练方式使得模型能够学习到更强的内部表征，从而更好地指导动作生成。
+“流式丢弃”与“跨模态强制”：这是实现灵活推理的关键技术。
+关键突破：
+提出了一种全新的、几乎零成本的视觉表征增强方法：巧妙地利用了现有VAE的泛化能力，无需新传感器、新预训练，即可为模型注入3D几何和语义信息。
+实现了一个极其灵活的推理框架：通过“流式丢弃”和“跨模态强制”，单个模型即可适应从“极速”到“高精度”的多种部署场景，极大地提升了实用性
+https://arxiv.org/abs/2608.10860
+
+
+
+
+近期热门论文：SimWAM: A Simple World Action Model for End-to-End Autonomous Driving
+        Paper ID：2608.07468
+        作者：Zongchuang Zhao, Xin Zhou, Tianyang Xu
+        发布日期：2026-08-11
+
+        训练与推理解耦：在训练时利用未来视频预测作为监督信号来学习交通动态先验，但在推理时直接预测轨迹，而不生成任何未来帧
+
+        算法方案：
+双专家架构：模型包含两个核心组件：
+视频专家（Video Expert）：一个预训练的视频生成模型（基于 Wan2.2-5B），负责在训练时提供视频动态先验。
+动作专家（Action Expert）：一个轻量级的扩散Transformer（DiT），负责最终的轨迹预测。
+联合流匹配训练（Joint Flow Matching）：两个专家通过流匹配（Flow Matching）目标进行联合训练。视频预测任务作为训练时的监督信号，将交通动态知识传递给动作专家。
+隔离注意力掩码（Isolated Attention Mask）：这是实现训练推理解耦的关键。该掩码阻止了动作专家在训练时访问未来的视频帧信息。这使得动作专家在推理时可以不依赖任何未来帧生成，直接输出轨迹。
+强化学习微调（Reinforcement Learning）：在模仿学习之后，作者进一步使用组相对策略优化（GRPO）对动作专家进行强化学习微调。通过将确定性常微分方程（ODE）转换为随机微分方程（SDE），模型能够探索更多样的驾驶策略，并直接优化一个组合的驾驶奖励函数（NAVSIM PDM奖励）
+
+        关键突破：
+SimWAM 的核心贡献在于，它揭示了在端到端自动驾驶中，世界模型的强大动态先验可以在训练时被提取，而无需在推理时承担其高昂的计算成本。这种“训练时学习，推理时轻量”的思路，为构建既高性能又高效率的自动驾驶系统提供了一个简单、扎实且极具潜力的新基线
+ https://arxiv.org/abs/2608.07468
+
+
+
+
+近期热门论文：XCoT-VLA: Executable Chain-of-Thought for Vision-Language-Action Driving
+Paper ID: 2608.10976
+作者: Foundation Model Team, XPeng Inc
+核心思想：用“可执行”的推理代替“描述性”的推理
+- 算法方案 -
+1.  彻底抛弃大段的自然语言，把驾驶决策压缩成了极其紧凑的“标准化动作符号”。
+例如，上述左转遇红灯的场景，推理过程会被直接压缩为 LEFT_TURN_PREPARE → DECELERATE → RED_LIGHT_HOLD。整个过程只需两三个指令 Token 就能完成推理，大幅降低了算力开销。
+2.  模型采用了共享的多模态自注意力机制，但在输出端拆分成了两个独立的前馈网络（FFN），互不干扰：
+Reason FFN（推理分支）： 负责处理图像和导航信息，快速预测出 2-6 位的 XCoT 离散指令序列。
+Control FFN（控制分支）： 接收推理分支给出的指令，结合当前车辆状态，利用流匹配（Flow Matching）技术直接预测未来 6 秒的连续轨迹（纵向加速度、横摆变化等）。
+3.  全自动标签构建： 不需要人工去标注大量的“思维链”。论文设计了一套流水线，直接从海量的实车日志中，将“场景原因（如红灯）”与“车辆动作（如减速）”进行因果匹配，自动生成几十万条标准化的 XCoT 训练数据。
+4.  XCPO 策略优化（可选）： 在基础训练完成后，引入强化学习思路，根据轨迹的“路线完成度、舒适性、碰撞风险”等给予奖励反馈，进一步让模型的决策变得更安全、更老司机。
+https://arxiv.org/abs/2608.10976
+
+
+近期热门论文：BrainWAM: Action-Space Coordination of Semantic Priors and Predictive Dynamics for Autonomous Driving
+热度：8，作者：Bing Zhan, Shuyao Shang, Jiahao Gu, Shuo Lu, Yuan Xu 等 11 人
+这篇论文很有意思，一个模型同时包含一个WAM和一个 VLA，就像左半脑和右半脑一样，中间通过一个胼胝体CAB桥接在一起，有一点点仿生学的意思
+论文链接：https://arxiv.org/html/2608.12854v1
+
+
+近期热门论文：Multi-View Relational Distillation for Spatial Reasoning with Vision-Language Models
+热度：22，作者：Kiet T. Nguyen, Hanbo Shim, Jinwoo Kim, Seunghoon Hong
+这是一篇非常天才的论文，VLM在理解多个视角之间关系上经常存在困难。这篇论文发现未必要从多个视觉的图像特征上去学习理解不同视角之间的关系，可以直接学习不同视角图像之间的余弦相似度就可以了。在学习过程中，保证VLM的张量空间中不同视角能够继承实际各视角图像之间的余弦相似度就可以自然学习到各个视角之间的空间几何关系。余弦相似度的计算成本很低，所以这个算法算力消耗很细小。
+论文链接：https://arxiv.org/html/2608.10864v1
+
+
+
+
+近期热门论文：DriveVLA-M0: Failure-Aware Memory Augmentation for Autonomous Driving
+热度：7， 作者：Zebin Xing, Yupeng Zheng, Qiang Chen
+在不影响VLA主干的情况下，增加失败案例隐式记忆库，当判定基线模型输出落入失败案例范围时，对基线模型输出进行优化修正，以提升模型输出质量。失败案例隐式记忆库独立于VLA主干可通过LoRA独立更新，甚至推理阶段优化。
+该论文在NAVSIMv1 和 NAVSIMv2 两个测试基准上获得SOTA，但是这种针对失败场景打补丁的方式是否是长远方向值得探讨
+论文链接：https://arxiv.org/abs/2608.10413
+
+
+近期热门论文：HarnessEval-W: Agentifying the Evaluation of Visual Worlds，世界模型也用上Harness了～
+热度：55， 作者：Weiliang Chen, Haowen Sun, Jun Gao, Jiawei Chi, Hanyang Wang
+现有世界模型的评估基准都是黑盒的，无法解释模型为何失败（如物理违规或因果断裂），缺乏可解释性和诊断能力。
+这篇论文名为 《HarnessEval-W: Agentifying the Evaluation of Visual Worlds》（于2026年8月发布），提出了一种利用智能体（Agent）来自动化、可解释地评估“视觉世界模型（Visual World Models）”的新范式：
+1）场景解析与任务分解： 不再使用固定死板的评分标准，而是先理解每个评估案例的具体上下文，并将复杂的评估问题拆解为多个可衡量的“子问题”。
+2）子智能体（Sub-agents）分工协作： 为每个子问题派生出专门的子智能体，并为它们配备量身定制的诊断工具和上下文信息，让它们各自负责特定层面的推理（例如单独检查物理碰撞是否合理、状态是否保持一致等）。
+3）构建“证据树”（Evidence Tree）： 父智能体（Parent Agent）负责收集和验证所有子智能体提供的证据，并将其总结为最终的评判结果。整个评估过程会被具象化为一棵透明的证据树，确保最终的结论都有完整的逻辑和证据链支撑。
+论文链接：https://arxiv.org/html/2608.16859v1
+
+
+近期热门论文：PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives
+热度：28，作者：Kaixin Ding, Xi Chen, Minghong Cai
+【背景】以往测试世界模型的方式是用一些固定的测试用例来测试，但是由于世界模型本身有很多不确定性，用固定的测试用例来测试世界模型，常常无法很好应对世界模型生成世界时的各种不确定性。
+【创新点】该论文让一个多模态Agent以玩游戏的方式去品鉴被测试的世界模型，这个多模态Agent像一个人一样在被测的世界模型里W/A/S/D, ↑/↓/←/→, and WAIT一通玩，然后像人一样评价一下世界模型质量是否高，是否逼真
+https://arxiv.org/html/2608.13552v1
+
+
+近期热门论文：Is Forward Prediction Enough? Physical State Grounding for JEPA World Models
+热度：26， 作者：Haodong Yan, Jiaguan Zhu, Mingyuan Jia
+背景：传统的JEPA世界模型主要依赖前向预测（Forward Prediction），但这种方式无法确保从单一潜变量中可靠地提取出机器人的物理状态，也难以从潜变量对中识别出状态的变化，这在很大程度上限制了下游任务中目标规划和策略控制的性能。
+创新点：该论文在训练的时候，隐变量增加两个Head，输出机器人本体状态和状态变化，并在损失函数中增加对这两个因素，显式地将潜在表征锚定到机器人的物理状态和状态变化。并且该论文在推理的时候可以去掉这两个Head，在不增加推理计算成本的前提下，显著提升了潜在表征的物理可辨识性、规划效率和策略学习性能
+https://arxiv.org/html/2608.06799v1
+
+近期学术论文：World Tokens: Enhancing Embodied Policies with Training-Time World Modeling
+背景：经典 VLA 模型对物理世界的时空动态演化（例如按下开关后物体的位移、受力后的反馈）缺乏直觉感知，容易出现动作不精准或无法应对遮挡；世界动作模型逐帧逐像素生成未来视频又太消耗推理算力
+创新点：本论文在训练阶段同时使用VLM和WM进行联合训练，强行对齐未来动作的语言描述 和 未来视频的生成 两个能力。推理时去掉WM只保留VLM部分，但是由于训练时VLM和WM对齐了，所以推理时VLM也具备了WM的物理直觉，可以有效提升动作精确度。
+https://arxiv.org/html/2608.09730v1 

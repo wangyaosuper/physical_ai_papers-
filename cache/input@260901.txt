@@ -1,0 +1,31 @@
+近期热门论文：WAM-Diff2: Hierarchical AR-to-Diffusion Distillation for Highly Efficient Autonomous Driving VLA
+热度：22，作者：Zhihao Zhu, Hanlin Shang
+背景：自回归模型和扩散模型各有长短板，如何将自回归模型的优势融合到扩散模型中呢
+创新点：论文提出了一种创新的三阶段训练方法，可以把自回归教师模型（8B）的能力强行有效的蒸馏到扩散模型（2B）中，让扩散模型同时具备自回归模型的因果语音理解能力和扩散模型自身的能力优势
+（阶段一：渐进式块级适配，阶段二：块级蒸馏，阶段三：模型级跨尺度蒸馏）
+论文链接：https://arxiv.org/html/2608.01035v4
+
+
+
+
+近期热门论文：Data Pyramid for Embodied Manipulation: A Survey
+热度：113 ， 作者：Yaoxu Lv
+这是一篇具身智能的系统性综述类论文：具身操作的数据金字塔
+这篇论文是 2026 年 7 月发布的一篇系统性综述，题为 《Data Pyramid for Embodied Manipulation: A Survey》（具身操作的数据金字塔）。
+传统的视觉和语言大模型可以通过“吞噬”互联网海量数据来实现能力的飞跃，但具身智能（Embodied AI）无法走这条捷径——它必须依赖将视觉观察、物理状态与具体动作相耦合的交互数据。这篇综述的核心就是系统性地梳理目前高度碎片化的具身数据生态，并分析这些数据如何驱动下一代基础模型。这篇论文在业界热度和评价很高。
+论文链接：https://arxiv.org/abs/2607.24744
+
+
+
+近期热门论文：DA-WAM: Decision-Aligned Future Latents for Driving World Models
+热度：33， 作者：Ruiguo Zhong, Benshan Ma, Xiaolong Chen
+背景：车端世界模型对外来的预测与驾驶任务的端到端规划之间还有不小的脱节
+创新点：该论文在现有模型基础上做了大量工作，来针对性的对齐 “未来预测” 和 “驾驶规划决策” 这两个方面，这是本论文的关键看点
+https://arxiv.org/html/2608.19085v2
+
+
+近期热门论文：TurboVLA: Real-Time Vision-Language-Action Model at 32 Hz on an RTX 4090 with <1 GB VRAM
+热度：126 ， 作者：Hengyi Xie, Chenfei Yao
+背景：传统的VLA基模是一个大语言模型，体积都非常庞大，很难在具身本体上运行，并且VLA都是采用自回归串型方式进行推理，实时性不高
+创新点：本论文设计了一个及其精简的双向交叉注意力机制，实现视觉和语言的多模态融合对齐，并且采用并行方式进行Action推理。整个模型只有0.5B，可以轻松运行在各种具身本体，并且实时性很高。虽然该模型没有大语言模型作为基模，但是在具身的各种测试集上表现优秀。不禁让人怀疑难道不需要大语言模型打底，也能形成很强的分析推理能力？
+https://arxiv.org/abs/2607.27205

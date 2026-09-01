@@ -1,7 +1,7 @@
 # Physical AI 论文集锦与分类导读
 
-> 本文整理了 10 篇近期热门 Physical AI 论文,按研究方向归类,并做简要介绍。
-> 核心主题涵盖:世界-动作模型(WAM)、VLA 自动驾驶、世界模型评估、VLM 空间推理、JEPA 物理状态锚定等。
+> 本文整理了 14 篇近期热门 Physical AI 论文,按研究方向归类,并做简要介绍。
+> 核心主题涵盖:世界-动作模型(WAM)、VLA 自动驾驶、世界模型评估、VLM 空间推理、JEPA 物理状态锚定、具身智能数据生态与高效推理等。
 
 ---
 
@@ -42,13 +42,34 @@
 - **核心亮点**: 一个模型同时包含 WAM 和 VLA,宛如左半脑和右半脑,中间通过"CAB"桥接(类似胼胝体),带有一点仿生学的意味。
 - **链接**: https://arxiv.org/html/2608.12854v1
 
+### 5. WAM-Diff2: Hierarchical AR-to-Diffusion Distillation for Highly Efficient Autonomous Driving VLA
+- **Paper ID**: 2608.01035
+- **作者**: Zhihao Zhu, Hanlin Shang
+- **热度**: 22
+- **背景**: 自回归模型和扩散模型各有长短板,如何将自回归模型的优势融合到扩散模型中是关键问题。
+- **核心方案**: 提出创新的三阶段训练方法,将自回归教师模型(8B)的能力高效蒸馏到扩散模型(2B)中,使扩散模型同时具备自回归模型的因果语义理解能力和扩散模型自身的优势:
+  1. **渐进式块级适配**: 逐步对齐教师与学生模型的中间层表征。
+  2. **块级蒸馏**: 在 Transformer 块层面进行精细的知识迁移。
+  3. **模型级跨尺度蒸馏**: 从整体输出层面完成最终能力对齐。
+- **关键突破**: 以极小的参数量(2B)同时兼得 AR 的因果推理与 Diffusion 的生成质量,为高效自动驾驶 VLA 提供新范式。
+- **链接**: https://arxiv.org/html/2608.01035v4
+
+### 6. DA-WAM: Decision-Aligned Future Latents for Driving World Models
+- **Paper ID**: 2608.19085
+- **作者**: Ruiguo Zhong, Benshan Ma, Xiaolong Chen
+- **热度**: 33
+- **背景**: 车端世界模型对未来的预测与驾驶任务的端到端规划之间存在明显脱节,预测质量不直接等于决策质量。
+- **核心方案**: 在现有世界模型基础上,系统性地对齐「未来潜变量预测」与「驾驶规划决策」两个层面,使世界模型生成的未来表征真正服务于下游规划。
+- **关键突破**: 明确了"预测好≠决策好"的核心痛点,通过潜变量空间的决策对齐机制,让世界模型所学真正为驾驶决策所用。
+- **链接**: https://arxiv.org/html/2608.19085v2
+
 ---
 
 ## 二、VLA 自动驾驶:推理增强与失败记忆
 
 这一类论文聚焦于 **VLA(Vision-Language-Action)在自动驾驶场景中的决策推理能力**,通过链式推理、记忆机制等手段提升模型输出的安全性与"老司机感"。
 
-### 5. XCoT-VLA: Executable Chain-of-Thought for Vision-Language-Action Driving
+### 7. XCoT-VLA: Executable Chain-of-Thought for Vision-Language-Action Driving
 - **Paper ID**: 2608.10976
 - **作者**: Foundation Model Team, XPeng Inc
 - **核心思想**: 用"可执行"的推理代替"描述性"的推理。
@@ -61,7 +82,7 @@
   4. **XCPO 策略优化(可选)**: 强化学习根据路线完成度、舒适性、碰撞风险给予奖励反馈,让决策更安全。
 - **链接**: https://arxiv.org/abs/2608.10976
 
-### 6. DriveVLA-M0: Failure-Aware Memory Augmentation for Autonomous Driving
+### 8. DriveVLA-M0: Failure-Aware Memory Augmentation for Autonomous Driving
 - **Paper ID**: 2608.10413
 - **作者**: Zebin Xing, Yupeng Zheng, Qiang Chen
 - **热度**: 7
@@ -76,7 +97,7 @@
 
 传统世界模型评估基准多为黑盒评分,无法解释模型为何失败(物理违规或因果断裂)。这一类论文引入**智能体(Agent)协作**与**证据树**机制,使评估过程可解释、可诊断。
 
-### 7. HarnessEval-W: Agentifying the Evaluation of Visual Worlds
+### 9. HarnessEval-W: Agentifying the Evaluation of Visual Worlds
 - **Paper ID**: 2608.16859
 - **作者**: Weiliang Chen, Haowen Sun, Jun Gao, Jiawei Chi, Hanyang Wang
 - **热度**: 55
@@ -86,7 +107,7 @@
   3. **构建"证据树"(Evidence Tree)**: 父智能体收集并验证所有子智能体提供的证据,总结为最终评判结果。整个评估过程被具象化为一棵透明的证据树,确保结论有完整的逻辑和证据链支撑。
 - **链接**: https://arxiv.org/html/2608.16859v1
 
-### 8. PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives
+### 10. PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives
 - **Paper ID**: 2608.13552
 - **作者**: Kaixin Ding, Xi Chen, Minghong Cai
 - **热度**: 28
@@ -98,7 +119,7 @@
 
 ## 四、VLM 空间推理:轻量化视角关系蒸馏
 
-### 9. Multi-View Relational Distillation for Spatial Reasoning with Vision-Language Models
+### 11. Multi-View Relational Distillation for Spatial Reasoning with Vision-Language Models
 - **Paper ID**: 2608.10864
 - **作者**: Kiet T. Nguyen, Hanbo Shim, Jinwoo Kim, Seunghoon Hong
 - **热度**: 22
@@ -110,7 +131,7 @@
 
 ## 五、JEPA 世界模型:物理状态锚定
 
-### 10. Is Forward Prediction Enough? Physical State Grounding for JEPA World Models
+### 12. Is Forward Prediction Enough? Physical State Grounding for JEPA World Models
 - **Paper ID**: 2608.06799
 - **作者**: Haodong Yan, Jiaguan Zhu, Mingyuan Jia
 - **热度**: 26
@@ -120,17 +141,48 @@
 
 ---
 
+## 六、具身智能基础:数据生态与高效推理
+
+这一类论文聚焦于具身智能(Embodied AI)的基础设施层:一边是**高度碎片化的数据生态如何系统化梳理**,另一边是**VLA 模型如何在极低资源下实现实时推理**。两者共同构成了具身智能落地的关键前提。
+
+### 13. Data Pyramid for Embodied Manipulation: A Survey
+- **Paper ID**: 2607.24744
+- **作者**: Yaoxu Lv
+- **发布日期**: 2026-07
+- **热度**: 113
+- **背景**: 传统视觉和语言大模型可以通过"吞噬"互联网海量数据实现能力飞跃,但具身智能无法走这条捷径——它必须依赖将视觉观察、物理状态与具体动作相耦合的交互数据。
+- **核心贡献**: 作为 2026 年 7 月发布的系统性综述,**首次提出"数据金字塔"概念**,对当前高度碎片化的具身操作数据生态进行了完整的层级化梳理,并详细分析了不同层级数据如何驱动下一代具身基础模型。论文在业界热度与评价极高,是该领域必读的纲领性文献。
+- **关键价值**: 为研究者和工程师提供了一份清晰的"具身数据地图",有助于快速定位数据缺口、选择合适数据集、设计数据策略。
+- **链接**: https://arxiv.org/abs/2607.24744
+
+### 14. TurboVLA: Real-Time Vision-Language-Action Model at 32 Hz on an RTX 4090 with <1 GB VRAM
+- **Paper ID**: 2607.27205
+- **作者**: Hengyi Xie, Chenfei Yao
+- **热度**: 126
+- **背景**: 传统 VLA 基模多基于大语言模型,体积庞大难以在具身本体上运行;且普遍采用自回归串行推理,实时性不足。
+- **核心方案**:
+  1. **精简双向交叉注意力**: 设计极其精简的双向交叉注意力机制,实现视觉与语言的高效多模态融合对齐,摆脱大语言模型基座依赖。
+  2. **并行 Action 推理**: 摒弃自回归串行方式,采用并行解码直接输出动作序列,大幅降低推理延迟。
+- **关键突破**: 整个模型仅 0.5B 参数,显存占用 <1 GB,在 RTX 4090 上实现 32 Hz 实时推理,可轻松部署于各类具身本体;且在多个具身测试集上表现优秀,**引发了"是否必须依赖大语言模型打底才能具备强分析推理能力"这一深层思考**。
+- **链接**: https://arxiv.org/abs/2607.27205
+
+---
+
 ## 总结与研究趋势
 
 | 研究方向 | 代表论文 | 核心思想 |
 |---------|---------|---------|
-| 世界-动作模型(WAM) | Flex-π、SimWAM、World Tokens、BrainWAM | 训练时学习世界动态先验,推理时只保留轻量动作预测,实现"训练时学习,推理时轻量" |
+| 世界-动作模型(WAM) | Flex-π、SimWAM、World Tokens、BrainWAM、WAM-Diff2、DA-WAM | 训练时学习世界动态先验,推理时只保留轻量动作预测;同时通过知识蒸馏、决策对齐等技术持续压缩模型规模、提升决策质量 |
 | VLA 自动驾驶推理 | XCoT-VLA、DriveVLA-M0 | 用可执行指令链或失败记忆库提升 VLA 决策的安全性与精确度 |
 | 世界模型评估 | HarnessEval-W、PlayWorld | 用智能体协作与证据树替代黑盒评分,实现可解释、可诊断的评估 |
 | VLM 空间推理 | Multi-View Relational Distillation | 通过余弦相似度蒸馏,以极低成本学习多视角空间几何关系 |
 | JEPA 物理状态锚定 | Is Forward Prediction Enough? | 训练时增加物理状态 Head,推理时移除,零成本提升表征质量 |
+| 具身智能基础 | Data Pyramid、TurboVLA | 数据侧系统化梳理具身操作数据生态(数据金字塔);模型侧摆脱大语言模型依赖,以 0.5B 参数实现 32 Hz 实时具身推理 |
 
 **贯穿性主题**:
 1. **训练-推理解耦**已成为 Physical AI 的主流范式——训练时引入重型世界模型/多模态先验,推理时只保留轻量动作预测或 VLM,兼顾性能与效率(Flex-π、SimWAM、World Tokens、Is Forward Prediction Enough?)。
-2. **世界模型评估**正从"黑盒评分"走向"智能体协作+证据树",更注重可解释性与诊断能力(HarnessEval-W、PlayWorld)。
-3. **VLA 决策**正从"描述性推理"走向"可执行符号推理",并用失败记忆库补齐长尾场景(XCoT-VLA、DriveVLA-M0)。
+2. **模型压缩与知识蒸馏**成为小模型追平大模型的关键路径——通过三阶段分层蒸馏(AR→Diffusion)、精简注意力架构等手段,2B 甚至 0.5B 模型即可逼近 8B 级教师模型的能力(WAM-Diff2、TurboVLA)。
+3. **世界模型评估**正从"黑盒评分"走向"智能体协作+证据树",更注重可解释性与诊断能力(HarnessEval-W、PlayWorld)。
+4. **VLA 决策**正从"描述性推理"走向"可执行符号推理",并用失败记忆库补齐长尾场景(XCoT-VLA、DriveVLA-M0)。
+5. **预测与决策的对齐**日益受到重视——"预测得好≠决策得好",需要在潜变量层面显式对齐未来预测与下游规划(DA-WAM)。
+6. **具身智能基础设施**加速完善——数据生态的系统化梳理(数据金字塔)与极低资源实时推理(TurboVLA <1 GB / 32 Hz)共同推动具身智能从实验室走向真实本体落地。
