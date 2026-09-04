@@ -1,0 +1,7 @@
+近期热门论文：WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving
+热度：34，作者：Xinlin Wang, Yujiao Xiang, Yuheng Zhou
+背景：传统世界模型V-JEPA基于纯视觉预测，直接用于自动驾驶领域存在诸多问题，纯视觉信息并没有抓取出驾驶的本质特征
+创新点：本论文在V-JEPA基础上做了诸多优化，包括训练阶段对外来画面的掩码方式，引入基于条件流匹配（condition flow matching)的隐空间形式，对未来场景和自车规级进行联合预测，将模型能力更加聚焦于驾驶的本质特征。该论文的重要价值在于证明视觉模型（如JEPA）可以改造为强大的因果动作预测器。
+论文链接：https://arxiv.org/html/2608.20974v1
+
+
