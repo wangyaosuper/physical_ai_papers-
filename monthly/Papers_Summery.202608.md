@@ -5,10 +5,10 @@
 
 ## 1. JEPA 在智驾和具身领域的优化
 
-**背景说明**：JEPA 是通用世界模型，直接用于智驾和具身需要进行适配，以下论文在这些方面进行了创新。
+**背景说明**：JEPA 是通用世界模型技术方向，直接用于智驾和具身需要进行适配，以下论文在这些方面进行了创新。
 
 - **[DA-WAM: Decision-Aligned Future Latents for Driving World Models](https://arxiv.org/html/2608.19085v2)**  
-通过「LoRA 适配 V-JEPA 双塔 + 全程持续 JEPA 预测监督」让未来潜变量空间随规划目标协同进化，并为每条轨迹候选生成独立专属的未来潜变量参与打分，从机制上解决「预测得好 ≠ 决策得好」的脱节问题。
+通过「LoRA 适配 V-JEPA 双塔 + 全程持续 JEPA 预测监督」让未来潜变量空间随规划目标协同进化（传统WAM的JEPA表征和行为决策部分是分开训练的，在训练行为决策时JEPA部分时冻结的），并为每条轨迹候选生成独立专属的未来潜变量参与打分，从机制上解决「预测得好 ≠ 决策得好」的脱节问题。
 
 - **[WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving](https://arxiv.org/html/2608.20974v1)**  
 对 V-JEPA 进行驾驶范式重塑:重新设计训练阶段的画面掩码策略、引入条件流匹配的隐空间预测形式、对未来场景与自车轨迹进行联合预测，首次证明纯视觉 JEPA 可被改造为强大的因果动作预测器。
@@ -20,7 +20,7 @@
 
 ## 2. Flow Matching 在智驾和具身上的运用
 
-**背景说明**：Flow Matching 是近期相当热门的世界模型技术流派，以下论文在该方向上进行了创新。
+**背景说明**：Flow Matching 是近期相当热门的世界模型技术方向，以下论文在该方向上进行了创新。
 
 - **[SimWAM: A Simple World Action Model for End-to-End Autonomous Driving](https://arxiv.org/abs/2608.07468)**  
 采用「视频专家 + 动作专家」双专家架构下的联合流匹配(Joint Flow Matching)，以隔离注意力掩码让视频预测任务在训练时把交通动态先验传递给轻量动作专家，推理时无需生成任何未来帧即可直接输出轨迹。
@@ -44,7 +44,7 @@
 
 ## 4. VLA 与 WM 融合
 
-**背景说明**：VLA 和 WM 在不断走向融合，以下论文在这方面进行了创新。
+**背景说明**：VLA 和 WM 有相互借鉴相互借力的趋势，以下论文在这方面进行了创新。
 
 - **[World Tokens: Enhancing Embodied Policies with Training-Time World Modeling](https://arxiv.org/html/2608.09730v1)**  
 训练时将 VLM 与 WM 联合训练并对齐「未来动作的语言描述」与「未来视频生成」两种能力，推理时去掉 WM 只保留 VLM，使其免费获得物理直觉并提升动作精确度。
@@ -91,9 +91,21 @@
 
 ---
 
-## 总表
+## 小结
 
-<table>
+<style>
+.paper-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.paper-table th,
+.paper-table td {
+  border: 1px solid #999;
+  padding: 6px 12px;
+}
+</style>
+
+<table class="paper-table">
   <thead>
     <tr>
       <th>大类</th>
