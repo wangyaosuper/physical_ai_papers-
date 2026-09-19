@@ -1,0 +1,49 @@
+生成一个新文件叫做 Papers_Summery_Aug.md
+针对physical_ai_papers.md中的论文进行一下分类Summery，分成如下几类
+1. JEPA在智驾和具身领域的优化
+背景说明：JEPA是通用世界模型，直接用于智驾和具身，需要进行一些适配，以下论文在这些方面进行了创新
+DA-WAM: Decision-Aligned Future Latents for Driving World Models
+WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving
+Is Forward Prediction Enough? Physical State Grounding for JEPA World Models
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在JEPA方面的创新
+
+2.  Flow Matching在智驾和具身上的运用
+Flow Matching是近期相当热门的世界模型的技术流派，以下论文在Flow Matching方向上进行了创新：
+SimWAM: A Simple World Action Model for End-to-End Autonomous Driving
+WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving
+XCoT-VLA: Executable Chain-of-Thought for Vision-Language-Action Driving
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在flow matching方面的创新
+
+3. 传统扩散技术方面的持续创新
+传统扩散技术，如VAE等，还在持续创新
+Flex-π: A Multi-Stream World-Action Model with Compute Flexibility
+一句话总结一下这篇论文的创新
+
+4. VLA 与 WM 融合
+VLA和WM在不断的走向融合，以下论文在这方面进行了创新：
+World Tokens: Enhancing Embodied Policies with Training-Time World Modeling
+BrainWAM: Action-Space Coordination of Semantic Priors and Predictive Dynamics for Autonomous Driving
+WAM-Diff2: Hierarchical AR-to-Diffusion Distillation for Highly Efficient Autonomous Driving VLA
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在VLA和WM融合方面的创新
+
+5. VLA/VLM在智驾和具身上的运用
+VLA/VLM计算较大，特征表征相对稀疏，在智驾和具身上运用需要持续优化，一下论文在这方面进行了创新：
+XCoT-VLA: Executable Chain-of-Thought for Vision-Language-Action Driving
+Multi-View Relational Distillation for Spatial Reasoning with Vision-Language Models
+TurboVLA: Real-Time Vision-Language-Action Model at 32 Hz on an RTX 4090 with <1 GB VRAM
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在VLA/VLM方面的优化
+
+
+6. Agent技术在模型测试评估方面的运用
+Agent和Harness技术大量运用，提升训练和测试效率，如下论文在这方面进行了创新
+HarnessEval-W: Agentifying the Evaluation of Visual Worlds
+PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives
+上面这两个论文每个都用一句话总结一下，特别体现一下上面几个论文在Agent/Harness的运用上的创新
+
+7. 最后以一个宝藏级的具身智能系统性综述类论文压轴
+Data Pyramid for Embodied Manipulation: A Survey
+一句话总结一下这篇论文
+
+上面每一个论文还需要配上链接，方便读者快速跳转到
+
+最后整一个表格总结，分成以上7个大类，每一类列上论文的名称和链接
