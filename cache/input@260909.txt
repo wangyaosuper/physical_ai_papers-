@@ -173,4 +173,62 @@ https://arxiv.org/html/2607.20988v1
 https://arxiv.org/html/2608.23405v1
 
 
+近期热门论文：GaussianDWM++: Language-Grounded 3D Gaussian Driving World Model for Unified Scene Understanding, Editing, and Multi-Modal Generation
+基于语言锚定的3D高斯驾驶世界模型(车端)，用于统一场景理解、编辑与多模态生成
+热度：17，作者：Tianchen Deng, Xuefeng Chen, Shuang Wu
+背景：现有模型（如HERMES）多依赖BEV表示，存在空间结构丢失问题；且多为“黑盒”生成，无法回答自然语言问题或执行精确的指令级3D场景编辑，限制了其在复杂交互和仿真中的应用
+创新点：首次提出基于3D高斯的车端驾驶世界模型，将基础多模态特征直接嵌入显式3D高斯基元，让3D高斯直接用于自动驾驶的视觉理解系统。包括：基础特征高斯分词器，几何感知适配器，双条件生成模块，几何感知适配与KL分布对齐机制，并构建NuScenes-GSQA数据集以支持3D问答与推理。
+
+1. 核心动机：解决特征与空间结构脱节的问题
+在传统的自动驾驶世界模型中，为了让语言大模型理解场景，通常会使用 BEV（鸟瞰图）、深度图或体素占据（Occupancy）来表示3D空间。这种方式的缺点在于，语言语义与3D几何通常只能在粗糙的“特征级别”进行对齐，导致大模型难以捕捉细粒度的3D空间结构。
+为了解决这一问题，作者引入了Foundation-feature Gaussian Tokenizer，利用3D高斯泼溅（3D Gaussian Splatting, 3DGS）作为载体，让语言语义直接嵌入到具有明确位置和形状的3D图元（Primitives）中。
+2. 基础特征高斯分词器的工作机制
+直接特征蒸馏 (Direct Feature Distillation)
+该分词器不再依赖像 LangSplat 那样复杂的中间语言高斯构建步骤。对于多视角的输入图像 Iv
+ ，模型首先使用一个冻结（Frozen）的视觉-语言基础大模型编码器（例如 Qwen 或 SigLIP），提取密集的视觉-语言特征 Fv=E 
+接着，分词器将这些提取出的高维基础特征直接蒸馏并绑定到每一个3D高斯基元上。
+构建开放词汇高斯语义场 (Open-Vocabulary Gaussian Semantic Field)
+每个3D高斯基元原本包含：空间中心位置、各向异性几何（形状）、不透明度和外观（颜色）。
+通过这个分词器，每个高斯基元额外获得了一个“语义属性”。数以百万计的这种高斯基元组合在一起，就形成了一个紧凑的、可训练的“开放词汇高斯语义场”。由于继承了 Qwen/SigLIP 等大模型的能力，该语义场不仅能识别固定类别的物体，还能理解任意自然语言（开放词汇）的查询。
+自车中心坐标系 (Ego-centric Representation)
+在自动驾驶场景下，高斯场是在自车坐标系（Ego Coordinate System）下进行表示的，这使得所有的几何和语义信息都以自动驾驶车辆为中心。此外，模型对高斯的不透明度（Opacity）和尺度（Scale）进行了归一化处理，以避免在后续特征渲染和提取 Token 时出现不稳定的基元。
+3. 该模块在整个系统中的作用
+Foundation-feature Gaussian Tokenizer 本质上起到了一个“物理空间到语言空间的桥梁”的作用，它极大地改善了“图像观察 - 语言语义 - 3D空间几何”这三者之间的对齐效果。
+它输出的带有丰富语义的3D高斯场，会紧接着输入给后续的“几何感知高斯适配器 (Geometry-aware Gaussian Adapter)”：
+后续模块会评估这些高斯基元的几何质量和驾驶相关性进行分层筛选（Hierarchical Selection）。
+使用基于文本条件的交叉注意力机制（Perceiver-style cross-attention），将这些密集的高斯基元聚合并压缩成大语言模型（LLM）可理解的“世界级 Token (World Tokens)”。
+结合 KL 散度的对齐目标，确保这些高斯 Token 具有与基础图像 Token 一致的分布。
+https://arxiv.org/html/2608.16234v1
+
+
+
+近期热门论文：GeoWorldAD: Geometry World Action Model for Autonomous Driving
+面向自动驾驶的几何世界动作模型
+热度：24， 作者：Songyan Zhang, Jinyuan Tian, Hanbing Li, Daqi Liu, Hao Chen 
+背景：端到端视觉-动作模型缺乏3D几何理解，把驾驶当作「视频游戏」，基于像素做推理，而不是基于3D几何特征的理解来做推理，无法准确判断车流间隙是否足够，常过度保守停车，难以平衡安全与效率。
+创新点：将世界模型从像素空间转向紧凑的潜在几何空间；ego对齐的4D几何使几何理解随车辆移动保持一致；渐进式聚合多尺度当前几何与未来几何的迭代轨迹细化。该模型由三个模块组成：
+-  视频几何模型 (EgoStreamVGGT)：这是该架构的感知底座。它基于流式视觉几何 Transformer (StreamVGGT) 构建，专门提取自车对齐 (Ego-aligned) 的 4D 时空几何表示。这一步提取的“当前几何 (Present Geometry)”为系统提供了精确的静态和动态障碍物物理边界，是保障行驶安全的硬约束。
+-  几何世界模型 (Geometry World Model)：这是预测未来演变的核心。该模块采用类似 Q-Former 的架构，基于自车的当前状态和几何特征，学习潜在的未来几何 Token (Latent Future Geometry Tokens)。通过未来深度预测作为监督信号，它能推演出周围车辆的运动轨迹以及自车周边可行驶自由空间的变化。
+-  几何动作模型 (Geometry-Oriented Action Model)：在规划阶段，动作模型并没有简单拼接特征，而是采用迭代轨迹细化 (Iterative Trajectory Refinement) 的机制，将多尺度的“当前几何特征”与世界模型生成的“未来几何 Token”进行渐进式融合，从而生成最终的规划曲线。
+GeoWorldAD 保留了 3D 几何可解释性，NAVSIM v1 和 v2当季SOTA， Ego Progress 提升了近 3 个百分点。由于未来几何 Token 成功预判了其他车辆的让行或驶离趋势，系统敢于在保障安全的前提下保持较高车速，有效缓解了端到端模型常见的“幽灵刹车”和过度谨慎问题
+https://arxiv.org/html/2607.17521v2
+
+
+近期热门论文：Plug-and-Play Traffic Element Awareness for End-to-End Autonomous Driving
+热门：19，作者：Zongzheng Zhang, Jijun Wang, Saining Zhang
+背景：目前的端到端（E2E）自动驾驶研究主要集中在动态参与者（如车辆和行人）和密集的几何特征（如占据栅格）上，而很大程度上忽略了交通元素（Traffic Elements, TE）。
+创新点：首次系统性地量化了交通元素（红绿灯、交通标志等）对端到端自动驾驶模型的影响，并提出了一种极具通用性的轻量化感知增强架构。
+- 3D 交通元素数据集的自动化构建
+由于主流开源数据集缺乏结构化的交通元素标注，研究团队开发了一套自动化的 3D 中心点提取流水线。该方案利用 2D 目标检测器（YOLO）、单目深度估计大模型以及 LiDAR 点云投影的几何约束进行联合计算。通过这种方式，团队成功为 nuScenes、NAVSIM (v1/v2) 和 Bench2Drive 等广泛使用的数据集补充了庞大且精准的 3D 交通元素伪标签，填补了该领域的底层数据空白。
+- 即插即用的轻量化辅助监督机制
+该方案无需对现有的复杂网络架构进行大改。通过在系统的多任务训练框架中引入额外的 3D 交通元素定位（L1 误差）和分类（Focal 误差）辅助监督，网络在生成 BEV（鸟瞰图）或 Occupancy（占据网络）特征时，会被强迫“关注”并学习这些监管信号。这种轻量级的插入方式使得交通元素特征可以无缝融入任意主干网络的特征查询中。
+- 语言引导的拓扑条件化 (Language-Guided Topology Conditioning)
+在复杂的路口场景中，系统不仅要识别信号灯，还必须进行规则关联（即明确哪个信号灯管辖当前车道）。论文通过预测全局邻接矩阵来隔离出直接管控自车行驶轨迹的交通元素，防止下游规划器被冗余信号干扰。特别地，团队放弃了传统的图神经网络（GNN），而是采用更紧凑的语言风格嵌入（Language-style embeddings）来编码这种车道与信号灯的拓扑映射关系，并将其与 BEV 查询特征拼接，以此直接引导轨迹解码。
+
+这种“物理感知”与“规则约束”相融合的端到端架构表现出了极强的通用性。实验表明，无论底层的自动驾驶范式是感知-预测-规划流水线、视觉-语言-动作模型（VLA），还是基于回归、扩散（Diffusion）或轨迹打分的策略，该集成方案均能在闭环和开环测试中带来一致且显著的性能提升。这为解决长轴距重型卡车在复杂城市道路或物流园区中的红绿灯博弈、路权判断等长尾问题提供了一条已被验证的工程路径。
+
+https://arxiv.org/html/2608.18035v1
+
+
+
 
