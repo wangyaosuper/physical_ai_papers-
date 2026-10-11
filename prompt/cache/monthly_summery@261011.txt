@@ -1,0 +1,55 @@
+生成一个新文件叫做 Papers_Summery_Sep.202609.md
+针对input@260909.txt中的论文进行一下分类Summery，分成如下几类
+1. 加强世界模型对几何表征的理解
+Code World Model: Coding Agent as World Brain
+GeoWorldAD: Geometry World Action Model for Autonomous Driving
+HyWorldVLA: A Vision-Language-Action Model with Hybrid World Modeling for Autonomous Driving
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在几何表征理解方面的创新
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息）
+然后对这几篇论文进行一句话整体对比总结。
+
+2. 世界模型和高斯泼溅的结合
+4DGS-WAM: Bridging Past and Future with an Object-Centric World Action Model based on 4D Gaussian Splatting
+GaussianDWM++: Language-Grounded 3D Gaussian Driving World Model for Unified Scene Understanding, Editing, and Multi-Modal Generation
+上面这两个论文每个都用一句话总结一下，特别体现一下上面几个论文在世界模型和高斯泼溅结合方面的创新
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+3. 强化学习在自动驾驶和具身智能方面的运用
+DriveZero: End-to-End Driving Beyond Human Demonstrations
+Q-Learning With World Models
+Motus2: A Self-Evolving General World Model for Dexterous Manipulation（这一篇在input@261007.txt中）
+上面这三个论文每个都用一句话总结一下，特别体现一下上面几个论文在强化学习在自动驾驶和具身智能方面运用的创新
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+4. 用视觉预测来指导规划动作 vs 用规划动作来牵引视觉预测
+Hydra-0: Action Flow for Generalist World Modeling and Control
+Motus2: A Self-Evolving General World Model for Dexterous Manipulation（这一篇在input@261007.txt中）
+上面这两个论文每个都用一句话总结一下，特别体现一下上面几个论文在强化学习在自动驾驶和具身智能方面运用的创新
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+5. 把语言融入到世界模型中
+Code World Model: Coding Agent as World Brain
+Plug-and-Play Traffic Element Awareness for End-to-End Autonomous Driving
+上面这两个论文每个都用一句话总结一下，特别体现一下上面几个论文在把语言融入到世界模型中的创新
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+6. 时序记忆方面的优化
+MomADv2: Reliable Temporal Memory for End-to-End Autonomous Driving
+上面这一个论文用一句话总结一下
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+7. 真实城市环境下Agent空间理解能力的实测
+UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City
+上面这一个论文用一句话总结一下
+（对上面论文的总结你要亲自在网上阅读论文完整内容给出总结分析，不要局限于本目录中的信息，总结的时候要把论文热度在一开始的地方标上）
+然后对这几篇论文进行一句话整体对比总结。
+
+
+上面每一个论文还需要配上链接，方便读者快速跳转到
+
+最后整一个表格总结，分成以上7个大类，每一类列上论文的名称和链接
