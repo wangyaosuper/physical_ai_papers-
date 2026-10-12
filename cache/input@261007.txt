@@ -19,3 +19,17 @@ Motus2: A Self-Evolving General World Model for Dexterous Manipulation
 这一套闭环体系让模型可以在不与真实世界交互的情况下进行Model-Based强化学习，可以有效提升训练效率。
 同时该模型具备一个轻量级触觉专家，触觉也是模型输入之一，也值得关注
 https://arxiv.org/pdf/2608.30237
+
+
+
+
+近期热门论文：面向自动驾驶的物理一致性世界-动作模型（PhysWAM）
+PHYSWAM: PHYSICALLY CONSISTENT WORLD ACTION MODEL FOR AUTONOMOUS DRIVING
+热度：11， 作者：Fengcheng Yu
+背景：现有的 WAM 虽然能联合生成未来视频和车辆动作，但通常将它们作为各自独立的任务或只通过松散的模仿学习进行优化，缺乏对底层物理世界几何约束的显式耦合。这往往导致生成的视频、预测的场景深度以及车辆的自车运动（Ego motion）在物理上不一致（例如：画面感知距离与实际车速、位移不匹配）。
+创新：为了建立严密的物理约束，PhysWAM 引入了以下核心技术：
+- 统一的流匹配Transformer（Flow-Matching Transformer）：将多视角视频（Multiview video）、度量深度（Metric depth）以及自车运动（SE(3) Ego motion）整合到一个统一的基于流匹配的 Transformer 模型中，进行联合去噪（Co-denoises）。
+- 耦合点投影（CPP, Coupled Point Projection）：将场景几何深度和自车运动轨迹联合在一起进行推理估计，再结合Lidar的深度感知真值信息，进行比对，训练获得精确的深度估计能力的同时也增强了模型对自车轨迹的规划能力
+https://arxiv.org/pdf/2609.37970
+- 高效的度量深度估计：为了避免在每个训练步骤中都通过庞大的视频 VAE 解码器去计算密集的深度，论文设计了一种高效的轻量级解码方法，在保持空间分辨率的同时输出对数深度的特征，仅在训练中通过几何监督（CPP）反传梯度。
+- 标签无关的共识规划选择（Label-free Consensus Selection）： 在推理阶段，PhysWAM 不需要复杂的学得评分器（Learned scorer）或耗时的模拟器反馈，而是仅依赖一个简单的、标签无关的共识规则来进行轨迹选择。
